@@ -201,6 +201,7 @@ function verifyRequestSignature(req, res, buf) {
   }
 }
 
+
 /*
  * Authorization Event
  *
@@ -231,7 +232,7 @@ function receivedAuthentication(event) {
 }
 
 function pushID (trackID) {
-  spotifyApi.addTracksToPlaylist('eagomez349', '0Sw4JfFjp732pYtTqWzThh', ["spotify:track:" + trackID])
+  spotifyApi.addTracksToPlaylist('22aywe7mp5qa5ipmhkmsvkdqi', '10OtGxNzkkTeiN9QEIVL8j', ["spotify:track:" + trackID])
     .then(function(data) {
       console.log("Success! ");
     }, function(err) {
