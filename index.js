@@ -7,25 +7,8 @@ const
   crypto = require('crypto'),
   express = require('express'),
   https = require('https'),
-  request = require('request');
-
-var SpotifyWebApi = require('spotify-web-api-node');
-
-// credentials are optional
-var scopes = ['user-read-private', 'user-read-email', 'playlist-modify-private','playlist-modify-public'],
-    // TUNNEL
-    //redirectUri = 'https://e4eec35b.ngrok.io/spotify',
-    redirectUri = 'https://b41084a2.ngrok.io/Spotify',
-    clientId = '30ede5de4c7343b7a74c13c277813598',
-    state = 'sample-state';
-
-var spotifyApi = new SpotifyWebApi({
-  clientId : '30ede5de4c7343b7a74c13c277813598',
-  clientSecret : 'a424d80c185546ce9f526c767df8f6e3',
-  // TUNNEL
-  // redirectUri: 'https://e4eec35b.ngrok.io/spotify'
-  redirectUri : 'https://b41084a2.ngrok.io/Spotify'
-});
+  request = require('request'),
+  SpotifyWebApi = require('spotify-web-api-node');
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -33,34 +16,44 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 
-/*
- * Be sure to setup your config values before running this code. You can
- * set them using environment variables or modifying the config file in /config.
- *
- */
+// Constants
+const SPOTIFY_SCOPES = ['user-read-private', 'user-read-email', 'playlist-modify-private','playlist-modify-public'],
+  SPOTIFY_STATE = 'sample-state';
 
-// App Secret can be retrieved from the App Dashboard
-const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ?
+const SPOTIFY_REDIRECT_URI = (process.env.SPOTIFY_REDIRECT_URI) ?
+  process.env.SPOTIFY_REDIRECT_URI :
+  config.get('spotifyRedirectUri');
+
+const SPOTIFY_CLIENT_SECRET = (process.env.SPOTIFY_CLIENT_SECRET) ?
+  process.env.SPOTIFY_CLIENT_SECRET :
+  config.get('spotifyClientSecret');
+
+const MESSENGER_APP_SECRET = (process.env.MESSENGER_APP_SECRET) ?
   process.env.MESSENGER_APP_SECRET :
-  config.get('appSecret');
+  config.get('messengerAppSecret');
 
 // Arbitrary value used to validate a webhook
-const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
+const MESSENGER_VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
   (process.env.MESSENGER_VALIDATION_TOKEN) :
-  config.get('validationToken');
+  config.get('messengerValidationToken');
 
 // Generate a page access token for your page from the App Dashboard
-const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
+const MESSENGER_PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
   (process.env.MESSENGER_PAGE_ACCESS_TOKEN) :
-  config.get('pageAccessToken');
+  config.get('messengerPageAccessToken');
 
 // URL where the app is running (include protocol). Used to point to scripts and
 // assets located at this address.
-const SERVER_URL = (process.env.SERVER_URL) ?
-  (process.env.SERVER_URL) :
-  config.get('serverURL');
+const MESSENGER_SERVER_URL = (process.env.MESSENGER_SERVER_URL) ?
+  (process.env.MESSENGER_SERVER_URL) :
+  config.get('messengerServerURL');
 
-if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
+var spotifyApi = new SpotifyWebApi({
+  clientSecret : SPOTIFY_CLIENT_SECRET,
+  redirectUri : SPOTIFY_REDIRECT_URI
+});
+
+if (!(MESSENGER_APP_SECRET && MESSENGER_VALIDATION_TOKEN && MESSENGER_PAGE_ACCESS_TOKEN && MESSENGER_SERVER_URL)) {
   console.error("Missing config values");
   process.exit(1);
 }
@@ -72,7 +65,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
  */
 app.get('/webhook', function(req, res) {
   if (req.query['hub.mode'] === 'subscribe' &&
-      req.query['hub.verify_token'] === VALIDATION_TOKEN) {
+      req.query['hub.verify_token'] === MESSENGER_VALIDATION_TOKEN) {
     console.log("Validating webhook");
     res.status(200).send(req.query['hub.challenge']);
   } else {
@@ -189,7 +182,7 @@ function verifyRequestSignature(req, res, buf) {
     var method = elements[0];
     var signatureHash = elements[1];
 
-    var expectedHash = crypto.createHmac('sha1', APP_SECRET)
+    var expectedHash = crypto.createHmac('sha1', MESSENGER_APP_SECRET)
                         .update(buf)
                         .digest('hex');
 
@@ -483,7 +476,7 @@ function songChoicesButtons(recipientId, data) {
 function callSendAPI(messageData) {
   request({
     uri: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: PAGE_ACCESS_TOKEN },
+    qs: { access_token: MESSENGER_PAGE_ACCESS_TOKEN },
     method: 'POST',
     json: messageData
 
@@ -509,7 +502,7 @@ function callSendAPI(messageData) {
 // certificate authority.
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
-  console.log(spotifyApi.createAuthorizeURL(scopes, state));
+  console.log(spotifyApi.createAuthorizeURL(SPOTIFY_SCOPES, SPOTIFY_STATE));
 });
 
 module.exports = app;
