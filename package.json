@@ -10,14 +10,12 @@
   "author": "Jackie Ellis and Alex Gomez",
   "license": "ISC",
   "dependencies": {
+    "blanket": "^1.1.7",
     "body-parser": "^1.16.0",
     "config": "^1.20.4",
+    "coveralls": "^2.11.2",
     "ejs": "^2.4.2",
     "express": "^4.14.1",
-    "request": "^2.79.0",
-    "spotify-web-api-node": "2.3.6",
-    "blanket": "^1.1.7",
-    "coveralls": "^2.11.2",
     "grunt": "^0.4.0",
     "grunt-contrib-jshint": "~0.11.0",
     "grunt-contrib-watch": "~0.6",
@@ -25,8 +23,11 @@
     "mocha": "~1.20.1",
     "mocha-lcov-reporter": "0.0.2",
     "mockery": "^1.4.0",
+    "pug": "^2.0.0-beta11",
+    "request": "^2.79.0",
     "should": "~3.0",
     "sinon": "~1.12.2",
+    "spotify-web-api-node": "2.3.6",
     "xunit-file": "0.0.5"
   },
   "engines": {

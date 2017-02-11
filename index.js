@@ -12,7 +12,8 @@ const
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
-app.set('view engine', 'ejs');
+app.set('views', './');
+app.set('view engine', 'pug');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 
@@ -69,7 +70,7 @@ if (!(MESSENGER_APP_SECRET && MESSENGER_VALIDATION_TOKEN && MESSENGER_PAGE_ACCES
  *
  */
 app.get('/', function(req, res) {
-  res.send('This is TestBot Server');
+  res.render('login', {url: spotifyApi.createAuthorizeURL(SPOTIFY_SCOPES, SPOTIFY_STATE)});
 });
 
 app.get('/webhook', function(req, res) {
