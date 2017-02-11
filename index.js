@@ -20,6 +20,10 @@ app.use(express.static('public'));
 const SPOTIFY_SCOPES = ['user-read-private', 'user-read-email', 'playlist-modify-private','playlist-modify-public'],
   SPOTIFY_STATE = 'sample-state';
 
+const SPOTIFY_CLIENT_ID = (process.env.SPOTIFY_CLIENT_ID) ?
+  process.env.SPOTIFY_CLIENT_ID :
+  config.get('spotifyClientId');
+
 const SPOTIFY_REDIRECT_URI = (process.env.SPOTIFY_REDIRECT_URI) ?
   process.env.SPOTIFY_REDIRECT_URI :
   config.get('spotifyRedirectUri');
@@ -49,6 +53,7 @@ const MESSENGER_SERVER_URL = (process.env.MESSENGER_SERVER_URL) ?
   config.get('messengerServerURL');
 
 var spotifyApi = new SpotifyWebApi({
+  clientId: SPOTIFY_CLIENT_ID,
   clientSecret : SPOTIFY_CLIENT_SECRET,
   redirectUri : SPOTIFY_REDIRECT_URI
 });

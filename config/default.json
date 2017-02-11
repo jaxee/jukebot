@@ -3,6 +3,7 @@
     "messengerPageAccessToken": "EAAIgaAcK8KUBAMQSCb96QkWI91yQ8VmlcOlwZCrYDkZBWNrIoZBKALtpunFeJfIZCLOxhUZB1jTZC8z5HVIICGjAUtQWCSkujZB6voh7uMiIZBaxaPGx1T6eyIn1ZBghVAIR93vEHqwcSTzgZBkpqDTqfxWTJZCEXFWGhrEFt82nge83wZDZD",
     "messengerValidationToken": "i_like_music",
     "messengerServerURL": "https://thejukebot.herokuapp.com",
+    "spotifyClientId": "01dc70676c9f4c50ba43135e264244d7",
     "spotifyClientSecret": "80256d1167cb477380c9c5db7ed624b1",
     "spotifyRedirectUri": "https://thejukebot.herokuapp.com/spotify"
 }
