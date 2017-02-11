@@ -2,7 +2,7 @@
     "messengerAppSecret": "1b7cb9f930faa9eeedffb4e197e02f83",
     "messengerPageAccessToken": "EAAIgaAcK8KUBAMQSCb96QkWI91yQ8VmlcOlwZCrYDkZBWNrIoZBKALtpunFeJfIZCLOxhUZB1jTZC8z5HVIICGjAUtQWCSkujZB6voh7uMiIZBaxaPGx1T6eyIn1ZBghVAIR93vEHqwcSTzgZBkpqDTqfxWTJZCEXFWGhrEFt82nge83wZDZD",
     "messengerValidationToken": "i_like_music",
-    "messengerServerURL": "https://b41084a2.ngrok.io",
+    "messengerServerURL": "https://thejukebot.herokuapp.com",
     "spotifyClientSecret": "80256d1167cb477380c9c5db7ed624b1",
     "spotifyRedirectUri": "https://thejukebot.herokuapp.com/spotify"
 }

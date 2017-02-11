@@ -63,6 +63,10 @@ if (!(MESSENGER_APP_SECRET && MESSENGER_VALIDATION_TOKEN && MESSENGER_PAGE_ACCES
  * setup is the same token used here.
  *
  */
+app.get('/', function(req, res) {
+  res.send('This is TestBot Server');
+});
+
 app.get('/webhook', function(req, res) {
   if (req.query['hub.mode'] === 'subscribe' &&
       req.query['hub.verify_token'] === MESSENGER_VALIDATION_TOKEN) {
