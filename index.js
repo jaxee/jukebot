@@ -168,7 +168,7 @@ app.get('/spotify', function(req, res) {
     console.log('Something went wrong!', err);
   });
 
-  res.status(200).send(msg);
+  res.render('spotify');
 });
 
 /*
